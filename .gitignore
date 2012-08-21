@@ -7,7 +7,7 @@ Created on 20.08.2012
 from BeautifulSoup import BeautifulSoup
 import os
 
-# создаем список файлов в папке
+# создаем список файлов в папке (каждый файл - отдельная статья)
 path = ("D://Python27//MyProgs//entries//")
 listing = os.listdir(path)
 
