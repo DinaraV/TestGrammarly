@@ -28,10 +28,10 @@ for file_name in listing:
 # ищем атрибут id с value = Noun
     count = soup.find('span', attrs={'id':'Noun'})
     
-# если найден - ищем дальше слово "uncountable"    
+# если найден - ищем "uncountable" в той же ветке (достаточно подняться на 2 parent вверх- контекст получается обширный, что позволяет захватить инф-ю об исчисляемости, которая указана на той же строчке или на следующей)    
     if count is not None:
         print count
-        count_value=count.parent.nextSibling.nextSibling
+        count_value=count.parent.parent
         
 # если нашли, то пишем слово в файл с переходом на следующую строку        
         if "uncountable" in count_value.text:
