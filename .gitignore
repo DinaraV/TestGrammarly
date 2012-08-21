@@ -1,27 +1,42 @@
-*.py[co]
+# -*- coding: cp1251 -*-
+'''
+Created on 20.08.2012
 
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
+@author: Дина
+'''
+from BeautifulSoup import BeautifulSoup
+import os
 
-# Installer logs
-pip-log.txt
+# создаем список файлов в папке
+path = ("D://Python27//MyProgs//entries//")
+listing = os.listdir(path)
 
-# Unit test / coverage reports
-.coverage
-.tox
+# создаем файл для записи найденных существительных
+out_file = ("D://Python27//MyProgs//uncountable.txt")
 
-#Translations
-*.mo
+# открываем-закрываем для перезаписи, если файл раньше уже существовал
+output_file = open(out_file, 'w')
+output_file.close()
 
-#Mr Developer
-.mr.developer.cfg
+# идем по файлам в папке
+for file_name in listing:
+    print file_name
+    in_file = open(path+file_name, 'r')
+    output_file = open(out_file, 'a')
+    soup = BeautifulSoup(in_file)
+
+# ищем атрибут id с value = Noun
+    count = soup.find('span', attrs={'id':'Noun'})
+    
+# если найден - ищем дальше слово "uncountable"    
+    if count is not None:
+        print count
+        count_value=count.parent.nextSibling.nextSibling
+        
+# если нашли, то пишем слово в файл с переходом на следующую строку        
+        if "uncountable" in count_value.text:
+            words = soup.find('title').contents[0].split()
+            output_file.write(words[0]+"\n")
+    in_file.close()    
+
+output_file.close()    
